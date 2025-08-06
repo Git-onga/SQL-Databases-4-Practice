@@ -1,0 +1,19 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 5,
+            "server": "localhost",
+            "port": 3306,
+            "name": "MySQL Local",
+            "driver": "MySQL",
+            "database": "SalesDB",
+            "username": "root",
+            "password": "your_password",
+            "connectionTimeout": 30
+        }
+    ]
+}
