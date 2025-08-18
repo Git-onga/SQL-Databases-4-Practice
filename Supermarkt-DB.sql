@@ -1,3 +1,5 @@
+SHOW databases;
+
 -- Create the database
 CREATE DATABASE SupermarketManagement;
 USE SupermarketManagement;
@@ -183,6 +185,18 @@ INSERT INTO Sales (transaction_date, employee_id, customer_id, total_amount, pay
 ('2023-03-01 11:30:45', 2, NULL, 5.97, 'Cash'),
 ('2023-03-01 14:20:10', 2, 2, 22.45, 'Debit Card');
 
+INSERT INTO Sales (transaction_date, employee_id, customer_id, total_amount,payment_method) VALUES
+('2023-03-02 10:59:02', 2, NULL, 7.93, 'Cash'),
+('2023-03-02 15:32:12', 2, 2, 10.23, 'Debit Card'),
+('2023-03-03 13:27:42', 2, 1, 9.12, 'Cash'),
+('2023-03-04 09:37:10', 2, 2, 12.30, 'Debit Card'),
+('2023-03-04 13:50:47', 2, 1, 9.31, 'Debit Card'),
+('2023-03-04 14:02:19', 2, 2, 7.30, 'Cash'),
+('2023-03-05 13:49:29', 2, NULL, 20.93, 'Cash'),
+('2023-03-05 15:13:05', 2, 1, 6.93, 'Debit Card'),
+('2023-03-06 10:03:01', 2, NULL, 33.93, 'Cash');
+
+
 -- Insert sample sale items
 INSERT INTO SaleItems (sale_id, product_id, quantity, unit_price, subtotal) VALUES
 (1, 1, 2, 2.99, 5.98),
@@ -207,12 +221,226 @@ INSERT INTO InventoryMovements (product_id, movement_type, quantity, movement_da
 
 --Useful Queries
 
-SELECT DATE(transaction_date) AS sale_date, 
-       COUNT(*) AS transactions,
-       SUM(total_amount) AS total_sales
-FROM Sales
-GROUP BY DATE(transaction_date)
-ORDER BY sale_date DESC;
+--Query the databases to retrieve total sales of a particular date
+SELECT 
+    DATE(transaction_date) AS sale_date,
+    COUNT(total_amount) AS total_sales
+FROM 
+    Sales
+WHERE 
+    DATE(transaction_date) BETWEEN '2023-03-01' AND '2023-03-06'
+GROUP BY 
+    DATE(transaction_date)
+ORDER BY 
+    sale_date;
+
+-- Query the database to sum the customer's sales and group them
+SELECT 
+    c.customer_id,
+    c.first_name,
+    COUNT(s.sale_id) AS number_of_purchases,
+    SUM(s.total_amount) AS total_spent,
+    AVG(s.total_amount) AS average_purchase,
+    MAX(s.transaction_date) AS last_purchase_date
+FROM 
+    Customers c
+LEFT JOIN 
+    Sales s ON c.customer_id = s.customer_id
+GROUP BY 
+    c.customer_id, c.customer_name
+ORDER BY 
+    total_spent DESC;
+
+SELECT 
+    c.customer_id,
+    c.customer_name,
+    s.payment_method,
+    SUM(s.total_amount) AS total_spent,
+    COUNT(s.sale_id) AS transaction_count
+FROM 
+    Customers c
+JOIN 
+    Sales s ON c.customer_id = s.customer_id
+GROUP BY 
+    c.customer_id, c.customer_name, s.payment_method
+ORDER BY 
+    c.customer_name, total_spent DESC;
+
+SELECT 
+    c.customer_id,
+    c.customer_name,
+    DATE_FORMAT(s.transaction_date, '%Y-%m') AS month,
+    SUM(s.total_amount) AS monthly_spent
+FROM 
+    Customers c
+JOIN 
+    Sales s ON c.customer_id = s.customer_id
+GROUP BY 
+    c.customer_id, c.customer_name, DATE_FORMAT(s.transaction_date, '%Y-%m')
+ORDER BY 
+    c.customer_name, month;
+
+SELECT 
+    c.customer_id,
+    c.customer_name,
+    SUM(s.total_amount) AS lifetime_value,
+    COUNT(s.sale_id) AS total_orders,
+    SUM(s.total_amount) / COUNT(s.sale_id) AS avg_order_value
+FROM 
+    Customers c
+JOIN 
+    Sales s ON c.customer_id = s.customer_id
+GROUP BY 
+    c.customer_id, c.customer_name
+ORDER BY 
+    lifetime_value DESC
+LIMIT 10;
+
+SELECT 
+    c.customer_id,
+    c.customer_name,
+    SUM(s.total_amount) AS gross_sales,
+    SUM(s.discount_amount) AS total_discounts,
+    SUM(s.total_amount - s.discount_amount) AS net_sales,
+    (SUM(s.discount_amount) / SUM(s.total_amount)) * 100 AS discount_percentage
+FROM 
+    Customers c
+JOIN 
+    Sales s ON c.customer_id = s.customer_id
+GROUP BY 
+    c.customer_id, c.customer_name
+HAVING 
+    SUM(s.total_amount) > 0
+ORDER BY 
+    net_sales DESC;
+
+-- Query the Database to retrieve information on the least item by quantity
+SELECT 
+    p.product_id,
+    p.product_name,
+    SUM(si.quantity) AS total_quantity_sold
+FROM 
+    Products p
+JOIN 
+    Sale_Items si ON p.product_id = si.product_id
+GROUP BY 
+    p.product_id, p.product_name
+ORDER BY 
+    total_quantity_sold ASC
+LIMIT 1;
+
+-- Top 5
+SELECT 
+    p.product_id,
+    p.product_name,
+    SUM(si.quantity) AS total_quantity_sold,
+    COUNT(DISTINCT s.sale_id) AS times_ordered
+FROM 
+    Products p
+JOIN 
+    Sale_Items si ON p.product_id = si.product_id
+JOIN 
+    Sales s ON si.sale_id = s.sale_id
+GROUP BY 
+    p.product_id, p.product_name
+ORDER BY 
+    total_quantity_sold ASC
+LIMIT 5;
+
+-- Least sold items with zero sales
+SELECT 
+    p.product_id,
+    p.product_name,
+    0 AS total_quantity_sold
+FROM 
+    Products p
+LEFT JOIN 
+    Sale_Items si ON p.product_id = si.product_id
+WHERE 
+    si.product_id IS NULL
+UNION
+SELECT 
+    p.product_id,
+    p.product_name,
+    SUM(si.quantity) AS total_quantity_sold
+FROM 
+    Products p
+JOIN 
+    Sale_Items si ON p.product_id = si.product_id
+GROUP BY 
+    p.product_id, p.product_name
+ORDER BY 
+    total_quantity_sold ASC;
+
+-- Least sold items by category
+SELECT 
+    c.category_name,
+    p.product_name,
+    SUM(si.quantity) AS total_quantity_sold
+FROM 
+    Products p
+JOIN 
+    Categories c ON p.category_id = c.category_id
+JOIN 
+    Sale_Items si ON p.product_id = si.product_id
+GROUP BY 
+    c.category_name, p.product_name
+ORDER BY 
+    c.category_name, total_quantity_sold ASC;
+
+-- Least sold items with time filter
+SELECT 
+    p.product_id,
+    p.product_name,
+    SUM(si.quantity) AS total_quantity_sold
+FROM 
+    Products p
+JOIN 
+    Sale_Items si ON p.product_id = si.product_id
+JOIN 
+    Sales s ON si.sale_id = s.sale_id
+WHERE 
+    s.transaction_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 6 MONTH)
+GROUP BY 
+    p.product_id, p.product_name
+ORDER BY 
+    total_quantity_sold ASC
+LIMIT 10;
+
+-- Query the Database to display the amount of cost price stock is in stores
+SELECT 
+    p.product_id,
+    p.product_name,
+    p.quantity_in_stock,
+    p.unit_cost,
+    p.unit_price,
+    (p.unit_price - p.unit_cost) AS unit_profit,
+    (p.quantity_in_stock * (p.unit_price - p.unit_cost)) AS total_profit_in_stock
+FROM 
+    Products p
+ORDER BY 
+    total_profit_in_stock DESC;
+
+-- Query the Database to display the amount of profit from the stock
+
+-- Query the Database to display the products that were supplies in a certain date
+SELECT 
+    p.product_id,
+    p.product_name,
+    s.supplier_name,
+    sp.supply_date,
+    sp.quantity_supplied,
+    sp.unit_cost
+FROM 
+    Products p
+JOIN 
+    Supply sp ON p.product_id = sp.product_id
+JOIN 
+    Suppliers s ON sp.supplier_id = s.supplier_id
+WHERE 
+    DATE(sp.supply_date) = '2023-11-15'  -- Replace with your target date
+ORDER BY 
+    sp.supply_date;
 
 SELECT p.product_name, 
        SUM(si.quantity) AS total_quantity,
@@ -222,6 +450,7 @@ JOIN Products p ON si.product_id = p.product_id
 GROUP BY p.product_name
 ORDER BY total_quantity DESC
 LIMIT 10;
+
 
 SELECT e.employee_id, 
        CONCAT(e.first_name, ' ', e.last_name) AS employee_name,
@@ -245,3 +474,7 @@ FROM Customers c
 LEFT JOIN Sales s ON c.customer_id = s.customer_id
 GROUP BY c.customer_id, customer_name
 ORDER BY total_spent DESC;
+
+SELECT * FROM saleitems;
+
+-- Query the database to retrive the total quantity of items sold and group the by product_id

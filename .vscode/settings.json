@@ -12,7 +12,7 @@
             "driver": "MySQL",
             "database": "SalesDB",
             "username": "root",
-            "password": "your_password",
+            "password": "bil(mysql)003",
             "connectionTimeout": 30
         }
     ]

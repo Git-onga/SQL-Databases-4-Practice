@@ -1,3 +1,4 @@
+SHOW databases;
 -- Create the database
 CREATE DATABASE OrganizationDB;
 USE OrganizationDB;
