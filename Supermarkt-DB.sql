@@ -142,8 +142,8 @@ CREATE INDEX idx_sale_date ON Sales(transaction_date);
 CREATE INDEX idx_employee_name ON Employees(last_name, first_name);
 CREATE INDEX idx_product_category ON Products(category_id);
 
+    --Simple Data Insertion
 
---Simple Data Insertion
 -- Insert sample categories
 INSERT INTO Categories (category_name, description) VALUES
 ('Beverages', 'Soft drinks, juices, water, etc.'),
@@ -153,26 +153,55 @@ INSERT INTO Categories (category_name, description) VALUES
 ('Meat', 'Beef, chicken, pork, etc.'),
 ('Produce', 'Fresh fruits and vegetables'),
 ('Household', 'Cleaning supplies, paper products, etc.');
+INSERT INTO Categories (category_name, description) VALUES
+("Electronics", 'TVs, Home appliances, Kitchen appliences');
 
 -- Insert sample suppliers
 INSERT INTO Suppliers (supplier_name, contact_person, phone, email) VALUES
 ('Fresh Foods Co.', 'John Smith', '555-1001', 'john@freshfoods.com'),
 ('Beverage Distributors Inc.', 'Sarah Johnson', '555-1002', 'sarah@bevdist.com'),
 ('Quality Meats Ltd.', 'Mike Brown', '555-1003', 'mike@qualitymeats.com');
+INSERT INTO  Suppliers (supplier_name, contact_person, phone, email) VALUES
+("Brookside Dairy Best Co.", "Lawrence Gray", "555-2394", "Lau@brookside.com"),
+('Fresha Bakaries and Co.', 'James Muriuki', '555-3212', 'muruiki@fresha.com'),
+('GGG Distributors Ltd.', "Nancy Coldwater", "555-3212", "nacy@ggg.com"),
+("Tiger Electronics Ltd.", "Gilbert Trent", "555-3211", "tigercontact@gmail.com"),
+("Woosh and Co.", "Kill Margert", "555-1004", "margert@kill.com");
+
 
 -- Insert sample products
 INSERT INTO Products (product_name, category_id, barcode, price, cost_price, quantity_in_stock, supplier_id, date_added) VALUES
-('Whole Milk 1L', 2, '123456789012', 2.99, 1.80, 50, 1, '2023-01-15'),
-('White Bread', 3, '234567890123', 1.99, 0.90, 30, 1, '2023-01-15'),
-('Mineral Water 500ml', 1, '345678901234', 0.99, 0.40, 100, 2, '2023-01-20'),
-('Chicken Breast 1kg', 5, '456789012345', 8.99, 5.50, 25, 3, '2023-02-01'),
-('Apples 1kg', 6, '567890123456', 3.49, 2.20, 40, 1, '2023-02-05');
+('Whole Milk 1L', 2, '123456789012', 105.15, 91.80, 50, 1, '2023-01-15'),
+('White Bread 400g', 3, '234567890123', 65.00, 50.00, 30, 5, '2023-01-15'),
+('Mineral Water 500ml', 1, '345678901234', 40.25, 20.40, 100, 2, '2023-01-20'),
+('Chicken Breast 1kg', 5, '456789012345', 400.10, 320.60, 25, 3, '2023-02-01'),
+('Apples 1kg', 6, '567890123456', 100.50, 90.00, 40, 1, '2023-02-05');
+INSERT INTO Products (product_name, category_id, barcode, price, cost_price, quantity_in_stock, supplier_id, date_added) VALUES
+('Delmere 500mL', 2, '678912345012', 150.90, 100.80, 50, 4, '2023-02-07'),
+('43-Inch Smart TV', 8, '456789012323', 45000.00, 39000.00, 4, 7, '2023-02-15'),
+('Tiger Microwave', 8, '345901267834', 30000.25, 25000.40, 2, 7, '2023-02-15'),
+('Omo Detergent Cleaner', 7, '789014562345', 150.10, 99.60, 25, 8, '2023-02-17'),
+('Sparkling Bar Soap', 7, '567456890123', 100.50, 90.00, 40, 8, '2023-02-17'),
+('Coca Cola 2l', 1, '190234567812', 210.00, 191.80, 50, 6, '2023-02-20'),
+('FarmFresh Sousages', 4, '901232345678', 305.00, 289.40, 20, 5, '2023-02-20'),
+('Chocolate Finger Cookies', 3, '340156789234', 110.25, 95.40, 14, 2, '2023-03-01'),
+('Sub Woofer 300Hz', 8, '567890142345', 1000.10, 9000.60, 4, 3, '2023-03-04'),
+('Dreamers Vanilla Ice Cream', 4, '560123457896', 230.50, 189.00, 40, 1, '2023-03-04');
+
 
 -- Insert sample employees
 INSERT INTO Employees (first_name, last_name, position, hire_date, salary, phone, email) VALUES
-('David', 'Wilson', 'Store Manager', '2022-05-10', 4500.00, '555-2001', 'david@supermarket.com'),
-('Emily', 'Davis', 'Cashier', '2023-01-15', 2200.00, '555-2002', 'emily@supermarket.com'),
-('Robert', 'Johnson', 'Stock Clerk', '2023-02-01', 1900.00, '555-2003', 'robert@supermarket.com');
+('David', 'Wilson', 'Store Manager', '2022-05-10', 28000.00, '555-2001', 'david@supermarket.com'),
+('Emily', 'Davis', 'Cashier', '2023-01-15', 15000.00, '555-2002', 'emily@supermarket.com'),
+('Robert', 'Johnson', 'Stock Clerk', '2023-02-01', 19000.00, '555-2003', 'robert@supermarket.com');
+INSERT INTO Employees (first_name, last_name, position, hire_date, salary, phone, email) VALUES
+('Samuel', 'Wangui', 'Package', '2022-05-10', 13000.00, '555-2001', 'wnguisamuel1990@gmail.com'),
+('Samatha', 'Muremi', 'Cashier', '2023-01-15', 15000.00, '555-2002', 'sam@supermarket.com'),
+('Daniel', 'Johnson', 'shelf Manager', '2023-02-01', 13000.00, '555-2003', 'robert@supermarket.com'),
+('Victor', 'Muchoki', 'Shelf Manager', '2022-05-10', 13000.00, '555-2001', 'vicktor@supermarket.com'),
+('Monica', 'Wangui', 'Cashier', '2023-01-15', 15000.00, '555-2002', 'monica@supermarket.com'),
+('Rose Mary', 'Njoroge', 'Package', '2023-02-01', 13000.00, '555-2003', 'rosemary@supermarket.com');
+
 
 -- Insert sample customers
 INSERT INTO Customers (first_name, last_name, phone, email, join_date, loyalty_points) VALUES
@@ -181,32 +210,56 @@ INSERT INTO Customers (first_name, last_name, phone, email, join_date, loyalty_p
 
 -- Insert sample sales
 INSERT INTO Sales (transaction_date, employee_id, customer_id, total_amount, payment_method) VALUES
-('2023-03-01 10:15:32', 2, 1, 15.95, 'Credit Card'),
-('2023-03-01 11:30:45', 2, NULL, 5.97, 'Cash'),
-('2023-03-01 14:20:10', 2, 2, 22.45, 'Debit Card');
+('2023-03-01 10:15:32', 5, 1, 1300.90, 'Credit Card'),
+('2023-03-01 11:30:45', 2, NULL, 579.95, 'Cash'),
+('2023-03-01 14:20:10', 8, NULL, 220.45, 'M-pesa');
 
 INSERT INTO Sales (transaction_date, employee_id, customer_id, total_amount,payment_method) VALUES
-('2023-03-02 10:59:02', 2, NULL, 7.93, 'Cash'),
-('2023-03-02 15:32:12', 2, 2, 10.23, 'Debit Card'),
-('2023-03-03 13:27:42', 2, 1, 9.12, 'Cash'),
-('2023-03-04 09:37:10', 2, 2, 12.30, 'Debit Card'),
-('2023-03-04 13:50:47', 2, 1, 9.31, 'Debit Card'),
-('2023-03-04 14:02:19', 2, 2, 7.30, 'Cash'),
-('2023-03-05 13:49:29', 2, NULL, 20.93, 'Cash'),
-('2023-03-05 15:13:05', 2, 1, 6.93, 'Debit Card'),
-('2023-03-06 10:03:01', 2, NULL, 33.93, 'Cash');
+('2023-03-02 10:59:02', 2, NULL, 1300.20, 'Cash'),
+('2023-03-02 15:32:12', 2, NULL, 45730.20, 'M-pesa'),
+('2023-03-03 13:27:42', 8, 1, 400.10, 'Credit Card'),
+('2023-03-04 09:37:10', 2, 2, 720.30, 'Credit Card'),
+('2023-03-04 13:50:47', 5, NULL, 240.31, 'Cash'),
+('2023-03-04 14:02:19', 8, 2, 1320.30, 'Credit Card'),
+('2023-03-05 13:49:29', 2, NULL, 12300.90, 'Cash'),
+('2023-03-05 15:13:05', 8, NULL, 2900.35, 'M-pesa'),
+('2023-03-06 10:03:01', 8, NULL, 3790.50, 'M-pesa');
 
+INSERT INTO Sales (transaction_date, employee_id, customer_id, total_amount,payment_method) VALUES
+('2023-03-06 11:37:02', 2, NULL, 550.30, 'Cash'),
+('2023-03-06 15:21:12', 5, NULL, 450.43, 'Cash'),
+('2023-03-07 10:42:12', 8, 1, 200.32, 'Credit Card'),
+('2023-03-07 12:37:10', 5, NULL, 120.30, 'M-pesa'),
+('2023-03-08 10:40:23', 8, NULL, 900.31, 'Cash'),
+('2023-03-08 14:32:19', 2, 2, 10000, 'Credit Card'),
+('2023-03-09 13:59:29', 5, NULL, 675.32, 'Cash'),
+('2023-03-09 15:13:05', 2, NULL, 800.42, 'M-pesa'),
+('2023-03-10 10:53:01', 8, NULL, 340.32, 'M-pesa');
+
+UPDATE sales
+SET payment_method = 'Credit Card'
+WHERE sale_id = 102;
+
+SELECT * FROM employees;
+UPDATE sales
+SET employee_id = 5, total_amount = 1300.20, payment_method = "Credit Card"
+WHERE sale_id = 1;
 
 -- Insert sample sale items
 INSERT INTO SaleItems (sale_id, product_id, quantity, unit_price, subtotal) VALUES
-(1, 1, 2, 2.99, 5.98),
-(1, 2, 1, 1.99, 1.99),
-(1, 3, 3, 0.99, 2.97),
-(1, 5, 1, 3.49, 3.49),
-(2, 3, 6, 0.99, 5.94),
-(3, 4, 2, 8.99, 17.98),
-(3, 1, 1, 2.99, 2.99),
-(3, 2, 1, 1.99, 1.99);
+(1, 1, 2, 105.15, 310.30),
+(1, 2, 1, 65.00, 65.00),
+(1, 3, 3, 40.25, 120.75),
+(1, 5, 1, 100.50, 100.50),
+(2, 3, 6, 30.25, 181.50),
+(3, 4, 2, 400.50, 801.00),
+(3, 18, 1, 30000.25, 30000.25),
+(3, 20, 1, 100.50, 100.50);
+
+SELECT * FROM saleitems;
+UPDATE saleitems
+SET product_id = 20, unit_price = 100.50, subtotal = 100.50
+WHERE sale_item_id = 8;
 
 -- Insert sample inventory movements
 INSERT INTO InventoryMovements (product_id, movement_type, quantity, movement_date, reference_id) VALUES
