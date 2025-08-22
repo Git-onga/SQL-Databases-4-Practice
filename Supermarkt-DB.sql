@@ -1,4 +1,6 @@
 SHOW databases;
+-- ⚠️⚠️ Deletes the entire DATABASE
+DROP DATABASE SupermarketManagement;
 
 -- Create the database
 CREATE DATABASE SupermarketManagement;
@@ -73,7 +75,7 @@ CREATE TABLE Sales (
     employee_id INT,
     customer_id INT,
     total_amount DECIMAL(10, 2) NOT NULL,
-    payment_method ENUM('Cash', 'Credit Card', 'Debit Card', 'Mobile Payment'),
+    payment_method ENUM('Cash', 'Credit Card', 'M-pesa'),
     discount_amount DECIMAL(10, 2) DEFAULT 0,
     tax_amount DECIMAL(10, 2) DEFAULT 0,
     FOREIGN KEY (employee_id) REFERENCES Employees(employee_id),
@@ -152,16 +154,14 @@ INSERT INTO Categories (category_name, description) VALUES
 ('Frozen Foods', 'Frozen vegetables, meals, ice cream, etc.'),
 ('Meat', 'Beef, chicken, pork, etc.'),
 ('Produce', 'Fresh fruits and vegetables'),
-('Household', 'Cleaning supplies, paper products, etc.');
-INSERT INTO Categories (category_name, description) VALUES
+('Household', 'Cleaning supplies, paper products, etc.'),
 ("Electronics", 'TVs, Home appliances, Kitchen appliences');
 
 -- Insert sample suppliers
 INSERT INTO Suppliers (supplier_name, contact_person, phone, email) VALUES
 ('Fresh Foods Co.', 'John Smith', '555-1001', 'john@freshfoods.com'),
 ('Beverage Distributors Inc.', 'Sarah Johnson', '555-1002', 'sarah@bevdist.com'),
-('Quality Meats Ltd.', 'Mike Brown', '555-1003', 'mike@qualitymeats.com');
-INSERT INTO  Suppliers (supplier_name, contact_person, phone, email) VALUES
+('Quality Meats Ltd.', 'Mike Brown', '555-1003', 'mike@qualitymeats.com'),
 ("Brookside Dairy Best Co.", "Lawrence Gray", "555-2394", "Lau@brookside.com"),
 ('Fresha Bakaries and Co.', 'James Muriuki', '555-3212', 'muruiki@fresha.com'),
 ('GGG Distributors Ltd.', "Nancy Coldwater", "555-3212", "nacy@ggg.com"),
@@ -175,8 +175,7 @@ INSERT INTO Products (product_name, category_id, barcode, price, cost_price, qua
 ('White Bread 400g', 3, '234567890123', 65.00, 50.00, 30, 5, '2023-01-15'),
 ('Mineral Water 500ml', 1, '345678901234', 40.25, 20.40, 100, 2, '2023-01-20'),
 ('Chicken Breast 1kg', 5, '456789012345', 400.10, 320.60, 25, 3, '2023-02-01'),
-('Apples 1kg', 6, '567890123456', 100.50, 90.00, 40, 1, '2023-02-05');
-INSERT INTO Products (product_name, category_id, barcode, price, cost_price, quantity_in_stock, supplier_id, date_added) VALUES
+('Apples 1kg', 6, '567890123456', 100.50, 90.00, 40, 1, '2023-02-05'),
 ('Delmere 500mL', 2, '678912345012', 150.90, 100.80, 50, 4, '2023-02-07'),
 ('43-Inch Smart TV', 8, '456789012323', 45000.00, 39000.00, 4, 7, '2023-02-15'),
 ('Tiger Microwave', 8, '345901267834', 30000.25, 25000.40, 2, 7, '2023-02-15'),
@@ -193,8 +192,7 @@ INSERT INTO Products (product_name, category_id, barcode, price, cost_price, qua
 INSERT INTO Employees (first_name, last_name, position, hire_date, salary, phone, email) VALUES
 ('David', 'Wilson', 'Store Manager', '2022-05-10', 28000.00, '555-2001', 'david@supermarket.com'),
 ('Emily', 'Davis', 'Cashier', '2023-01-15', 15000.00, '555-2002', 'emily@supermarket.com'),
-('Robert', 'Johnson', 'Stock Clerk', '2023-02-01', 19000.00, '555-2003', 'robert@supermarket.com');
-INSERT INTO Employees (first_name, last_name, position, hire_date, salary, phone, email) VALUES
+('Robert', 'Johnson', 'Stock Clerk', '2023-02-01', 19000.00, '555-2003', 'robert@supermarket.com'),
 ('Samuel', 'Wangui', 'Package', '2022-05-10', 13000.00, '555-2001', 'wnguisamuel1990@gmail.com'),
 ('Samatha', 'Muremi', 'Cashier', '2023-01-15', 15000.00, '555-2002', 'sam@supermarket.com'),
 ('Daniel', 'Johnson', 'shelf Manager', '2023-02-01', 13000.00, '555-2003', 'robert@supermarket.com'),
@@ -212,9 +210,7 @@ INSERT INTO Customers (first_name, last_name, phone, email, join_date, loyalty_p
 INSERT INTO Sales (transaction_date, employee_id, customer_id, total_amount, payment_method) VALUES
 ('2023-03-01 10:15:32', 5, 1, 1300.90, 'Credit Card'),
 ('2023-03-01 11:30:45', 2, NULL, 579.95, 'Cash'),
-('2023-03-01 14:20:10', 8, NULL, 220.45, 'M-pesa');
-
-INSERT INTO Sales (transaction_date, employee_id, customer_id, total_amount,payment_method) VALUES
+('2023-03-01 14:20:10', 8, NULL, 220.45, 'M-pesa'),
 ('2023-03-02 10:59:02', 2, NULL, 1300.20, 'Cash'),
 ('2023-03-02 15:32:12', 2, NULL, 45730.20, 'M-pesa'),
 ('2023-03-03 13:27:42', 8, 1, 400.10, 'Credit Card'),
@@ -223,9 +219,7 @@ INSERT INTO Sales (transaction_date, employee_id, customer_id, total_amount,paym
 ('2023-03-04 14:02:19', 8, 2, 1320.30, 'Credit Card'),
 ('2023-03-05 13:49:29', 2, NULL, 12300.90, 'Cash'),
 ('2023-03-05 15:13:05', 8, NULL, 2900.35, 'M-pesa'),
-('2023-03-06 10:03:01', 8, NULL, 3790.50, 'M-pesa');
-
-INSERT INTO Sales (transaction_date, employee_id, customer_id, total_amount,payment_method) VALUES
+('2023-03-06 10:03:01', 8, NULL, 3790.50, 'M-pesa'),
 ('2023-03-06 11:37:02', 2, NULL, 550.30, 'Cash'),
 ('2023-03-06 15:21:12', 5, NULL, 450.43, 'Cash'),
 ('2023-03-07 10:42:12', 8, 1, 200.32, 'Credit Card'),
@@ -235,15 +229,16 @@ INSERT INTO Sales (transaction_date, employee_id, customer_id, total_amount,paym
 ('2023-03-09 13:59:29', 5, NULL, 675.32, 'Cash'),
 ('2023-03-09 15:13:05', 2, NULL, 800.42, 'M-pesa'),
 ('2023-03-10 10:53:01', 8, NULL, 340.32, 'M-pesa');
+SELECT * FROM sales;
 
-UPDATE sales
-SET payment_method = 'Credit Card'
-WHERE sale_id = 102;
+ALTER TABLE sales 
+MODIFY payment_method ENUM('Cash', 'Credit Card', 'M-pesa');
+
 
 SELECT * FROM employees;
 UPDATE sales
-SET employee_id = 5, total_amount = 1300.20, payment_method = "Credit Card"
-WHERE sale_id = 1;
+SET employee_id = 8, total_amount = 220.45, payment_method = "M-pesa"
+WHERE sale_id = 3;
 
 -- Insert sample sale items
 INSERT INTO SaleItems (sale_id, product_id, quantity, unit_price, subtotal) VALUES
@@ -272,9 +267,38 @@ INSERT INTO InventoryMovements (product_id, movement_type, quantity, movement_da
 (1, 'Sale', -1, '2023-03-01 14:20:10', 3),
 (2, 'Sale', -1, '2023-03-01 14:20:10', 3);
 
---Useful Queries
+SHOW TABLES;
 
---Query the databases to retrieve total sales of a particular date
+-- Useful Queries
+
+-- Retrive all employees who are cashiers
+SELECT * FROM employees;
+
+SELECT employee_id, first_name, last_name, position, salary, hire_date
+FROM employees
+WHERE position = "Cashier"
+ORDER BY employee_id;
+
+-- Retrive all records where product category is Dairy
+
+SELECT * FROM products;
+
+SELECT product_id, product_name, price, cost_price, supplier_id, quantity_in_stock
+FROM products
+WHERE category_id = 2
+
+-- Retrive all records in sales where payment method is M-pesa
+
+SELECT * FROM sales;
+
+SELECT sale_id, transaction_date, total_amount
+FROM sales
+WHERE payment_method = "M-pesa"
+ORDER BY transaction_date DESC;
+
+    -- Aggregate Queries
+
+-- Query the databases to retrieve total sales of a particular date
 SELECT 
     DATE(transaction_date) AS sale_date,
     COUNT(total_amount) AS total_sales
@@ -287,7 +311,22 @@ GROUP BY
 ORDER BY 
     sale_date;
 
+-- Query the database to sum all the sales based on their Category
+SELECT category_id, SUM(price) AS total_cost_per_cat, SUM(quantity_in_stock) AS stock
+FROM products
+GROUP BY category_id
+ORDER BY category_id ASC;
+
+-- Query the database to sum all the employee salary based on their departmet
+SELECT position, SUM(salary)
+FROM employees
+GROUP BY position;
+
+    -- JOIN operations
+
 -- Query the database to sum the customer's sales and group them
+SELECT * FROM customers;
+SELECT * FROM sales;
 SELECT 
     c.customer_id,
     c.first_name,
@@ -296,17 +335,18 @@ SELECT
     AVG(s.total_amount) AS average_purchase,
     MAX(s.transaction_date) AS last_purchase_date
 FROM 
-    Customers c
+    customers c
 LEFT JOIN 
-    Sales s ON c.customer_id = s.customer_id
+    sales s ON c.customer_id = s.customer_id
 GROUP BY 
-    c.customer_id, c.customer_name
+    c.customer_id
 ORDER BY 
     total_spent DESC;
 
+-- Query the Database to show all Customer and their purchase
 SELECT 
     c.customer_id,
-    c.customer_name,
+    c.first_name,
     s.payment_method,
     SUM(s.total_amount) AS total_spent,
     COUNT(s.sale_id) AS transaction_count
@@ -315,13 +355,14 @@ FROM
 JOIN 
     Sales s ON c.customer_id = s.customer_id
 GROUP BY 
-    c.customer_id, c.customer_name, s.payment_method
+    c.customer_id, c.first_name, s.payment_method
 ORDER BY 
-    c.customer_name, total_spent DESC;
+    c.first_name, total_spent DESC;
 
+-- Query the database to display the last time a loyal customer made a purchase
 SELECT 
     c.customer_id,
-    c.customer_name,
+    c.first_name,
     DATE_FORMAT(s.transaction_date, '%Y-%m') AS month,
     SUM(s.total_amount) AS monthly_spent
 FROM 
@@ -329,9 +370,9 @@ FROM
 JOIN 
     Sales s ON c.customer_id = s.customer_id
 GROUP BY 
-    c.customer_id, c.customer_name, DATE_FORMAT(s.transaction_date, '%Y-%m')
+    c.customer_id, c.first_name, DATE_FORMAT(s.transaction_date, '%Y-%m')
 ORDER BY 
-    c.customer_name, month;
+    c.first_name, month;
 
 SELECT 
     c.customer_id,
@@ -375,7 +416,7 @@ SELECT
 FROM 
     Products p
 JOIN 
-    Sale_Items si ON p.product_id = si.product_id
+    SaleItems si ON p.product_id = si.product_id
 GROUP BY 
     p.product_id, p.product_name
 ORDER BY 
@@ -391,7 +432,7 @@ SELECT
 FROM 
     Products p
 JOIN 
-    Sale_Items si ON p.product_id = si.product_id
+    SaleItems si ON p.product_id = si.product_id
 JOIN 
     Sales s ON si.sale_id = s.sale_id
 GROUP BY 
@@ -408,7 +449,7 @@ SELECT
 FROM 
     Products p
 LEFT JOIN 
-    Sale_Items si ON p.product_id = si.product_id
+    SaleItems si ON p.product_id = si.product_id
 WHERE 
     si.product_id IS NULL
 UNION
@@ -419,7 +460,7 @@ SELECT
 FROM 
     Products p
 JOIN 
-    Sale_Items si ON p.product_id = si.product_id
+    SaleItems si ON p.product_id = si.product_id
 GROUP BY 
     p.product_id, p.product_name
 ORDER BY 
